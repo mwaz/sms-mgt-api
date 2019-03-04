@@ -1,0 +1,32 @@
+{
+  "name": "sms-mgt-api",
+  "version": "1.0.0",
+  "description": "an SMS management API that mocks a user sending, receiving or deleting an SMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "lint": "eslint app/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwaz/sms-mgt-api.git"
+  },
+  "keywords": [
+    "sms"
+  ],
+  "author": "Waweru Mwaura",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwaz/sms-mgt-api/issues"
+  },
+  "homepage": "https://github.com/mwaz/sms-mgt-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.17"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.0"
+  }
+}
