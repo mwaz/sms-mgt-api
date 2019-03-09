@@ -1,14 +1,12 @@
-const express = require('express'),
-  bodyParser = require('body-parser'),
-  routes = require('./app/routes/userRoutes'),
-  mongoose = require('mongoose'),
-  cors = require('cors'),
-  path = require('path'),
-  passport = require('passport'),
-  // swaggerUi = require('swagger-ui-express'),
-  // YAML = require('yamljs'),
-  dBConfig = require('./utils/dbConfig');
-// swaggerDocument = YAML.load('./swagger.yaml');
+import dBConfig from './utils/dbConfig';
+import passport from 'passport';
+import path from 'path';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import routes from './app/routes';
+import  bodyParser from 'body-parser';
+import express from 'express';
+import jsend from 'jsend'
 
 
 mongoose
@@ -31,9 +29,10 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(jsend.middleware);
 
-routes(app);
+// routes(app);
+app.use('/sms-mgt/api', routes)
 
 app.use(express.static(path.join(__dirname, 'public')));
 

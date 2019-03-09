@@ -1,6 +1,6 @@
-config = require("../config");
+import config from "../config";
 
-module.exports = {
+export default {
   database: config.default["DATABASE"],
   port: config.default["PORT"],
   secret: config.default["SECRET"]
