@@ -1,46 +1,52 @@
-'use strict';
+import dBConfig from './utils/dbConfig';
+import passport from 'passport';
+import path from 'path';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import routes from './app/routes';
+import  bodyParser from 'body-parser';
+import express from 'express';
+import jsend from 'jsend'
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const routes = require("./app/routes");
-const config = require("./config");
-const passport = require("passport");
-const databaseConfiguration = require("./config/dbConfig");
 
 mongoose
   .connect(
-    databaseConfiguration.database,
+    dBConfig.database,
     { useNewUrlParser: true}
   )
   .then(() => {
-    console.log("successfully connected to the database");
+    console.log('successfully connected to the database');
   })
   .catch(() => {
-    console.log("unable to connect to the database  Exiting now..");
+    console.log('unable to connect to the database  Exiting now..');
     process.exit();
   });
   mongoose.set('useCreateIndex', true);
 
-// create express app
 const app = express();
-const cors = cors();
 
-app.use(cors);
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(jsend.middleware);
 
-routes(app);
-//Passport Middleware
+// routes(app);
+app.use('/sms-mgt/api', routes)
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./config/passport")(passport);
-
-const port = databaseConfiguration.port || 3005;
-
-const server =  app.listen(port, ()=>{
-    console.log(`App is running in port ${port}`);
+require('./utils/auth/passport')(passport);
+app.get('/', (req, res) => {
+  res.send('Invalid Endpoint');
 });
 
-module.exports = server;
+const port = dBConfig.port || 3005;
 
+const server = app.listen(port, function() {
+  console.log('app running on', server.address().port);
+});
+module.exports = server;
