@@ -8,7 +8,6 @@ const smsSchema = new mongoose.Schema({
     },
     sender: {
       type: Number,
-    //   ref: 'User',
       unique: false
     },
     recipient: {

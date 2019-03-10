@@ -18,35 +18,46 @@ export default class ContactController extends Controller {
         });
         return res.status(201).jsend.success({ contact })
     }
+
+    async getContact (req, res) {
+        const { params } = req;
+
+        const contact = await Contact.findOne({
+            phone: params.contactId
+        });
+
+        if(!contact){
+            return res.status(400).jsend.fail({ 
+                message: `Oops! contact ${params.contactId} does not exist`,
+             })
+        }
+        return res.status(201).jsend.success({ contact })
+    }
+
     async deleteContact (req, res) {
-        const { params, user } = req
+        const { params, user } = req;
         
-        const contact = await Contact.find({
-            _id: params.contactId
+        const contact = await Contact.findOne({
+            phone: params.contactId
         });
 
-        const recipients = await Sms.find({
-            recipient: user.phone,
+       const deleteReceivedMessages = await Sms.deleteMany({
+            sender: contact.phone
         })
+        const deleteReferences = await Sms.bulkWrite([
+            {
+                updateOne: {
+                    filter: { sender: user.phone, recipient: contact.phone },
+                    update: { sender : 0 }
+                }
+            }
+        ]);
 
-        const senders = await Sms.find({
-            sender: user.phone
-        })
-
-        if (recipients){
-          await Sms.deleteMany({
-            recipient: user.phone,
-        });
-        }
-        if (senders){
-          await Sms.deleteMany({
-            sender: user.phone
-          });
-        }
-
-        if(senders || recipients || contact){
-        const contact = await Contact.findByIdAndDelete({
-            _id: params.contactId
+        if(contact){
+            await deleteReceivedMessages;
+            await deleteReferences;
+            await Contact.findOneAndDelete({
+            phone: contact.phone
         });
 
         return res.status(200).jsend.success({ 
@@ -58,7 +69,6 @@ export default class ContactController extends Controller {
         message: 'Oops! looks like the contact you are looking for does not exist'
      })
         }
-    
     }
 
 

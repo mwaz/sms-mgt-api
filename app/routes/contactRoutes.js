@@ -10,6 +10,7 @@ const router = new Router();
 
 router.post('/add-contact', authenticatedRoutes, catchErrors(contactController.addContact));
 router.delete('/delete-contact/:contactId', authenticatedRoutes, catchErrors(contactController.deleteContact));
+router.get('/get-contact/:contactId', authenticatedRoutes, catchErrors(contactController.getContact));
 
 router.use((error, req, res, next) => {
 if (error.type === 'ValidationError') {

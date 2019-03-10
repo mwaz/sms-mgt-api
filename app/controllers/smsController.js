@@ -40,7 +40,7 @@ export default class SmsController extends Controller {
         });
         if (messageExists.length !== 0){
             return res.status(200).jsend.success({
-                textMessages : messageExists,
+                textMessages: messageExists,
                 inbox: messageExists.length
             })
         }
@@ -48,6 +48,29 @@ export default class SmsController extends Controller {
             message: `hurray! seems like you have no text messages`,
         })
     };
+
+    async readSingleSms (req, res){
+        const { user, params } = req;
+        const messageExists = await Sms.findOne({
+            _id: params.smsId
+        });
+
+        const {smsMessage , sender, contactReference} = messageExists;
+
+        if (messageExists.length !== 0){
+            return res.status(200).jsend.success({
+                textMessage : {
+                    sms: smsMessage,
+                    sender,
+                    contactReference
+                },
+            })
+        }
+        return res.status(200).jsend.success({
+            message: `hurray! seems like you have no text messages`,
+        })
+    };
+
 
     async deleteSms (req, res){
         const {params, user} = req;
@@ -61,9 +84,12 @@ export default class SmsController extends Controller {
                 message: 'Oops, looks like the text message does not exist'
             });
         }
+
         return res.status(200).jsend.success({
             message: 'your message has been successfully deleted',
-            deletedMessage: message
+            deletedMessage: {
+               message
+            },
         });
     };
     async getSmsStatus (){

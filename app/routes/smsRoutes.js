@@ -11,6 +11,7 @@ const authenticatedRoutes = passport.authenticate("jwt", {session: false} );
 router.post('/send-sms', authenticatedRoutes, catchErrors(smsController.sendSms));
 router.get('/read-sms', authenticatedRoutes, catchErrors(smsController.readSms));
 router.get('/sms-status', authenticatedRoutes, catchErrors(smsController.getSmsStatus));
+router.get('/read-sms/:smsId', authenticatedRoutes, catchErrors(smsController.readSingleSms));
 router.delete('/delete-sms/:smsId', authenticatedRoutes, catchErrors(smsController.deleteSms));
 
 router.use((error, req, res, next) => {
