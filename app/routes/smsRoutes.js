@@ -9,16 +9,15 @@ const router = new Router();
 const authenticatedRoutes = passport.authenticate("jwt", {session: false} );
 
 router.post('/send-sms', authenticatedRoutes, catchErrors(smsController.sendSms));
-router.get('/read-sms', catchErrors(smsController.readSms));
-router.get('/sms-status', catchErrors(smsController.getSmsStatus));
-router.delete('/delete-sms', catchErrors(smsController.deleteSms));
+router.get('/read-sms', authenticatedRoutes, catchErrors(smsController.readSms));
+router.get('/sms-status', authenticatedRoutes, catchErrors(smsController.getSmsStatus));
+router.delete('/delete-sms/:smsId', authenticatedRoutes, catchErrors(smsController.deleteSms));
 
 router.use((error, req, res, next) => {
-    console.log(req.user, 'py [][][][][[]][][][][][][][][][][][][][][][][][][] your output');
     if (error.type === 'ValidationError') {
         return res.status(422).jsend.fail({ errors: error.errors})
       };
-    console.log(error, ' errors [][][][][[]][][][][][][][][][][][][][][][][][][] your output');
+
       if (error.errors.smsMessage) {
         return res.status(409).jsend.fail({
           message: error.errors.smsMessage.message,

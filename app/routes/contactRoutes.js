@@ -1,14 +1,15 @@
 import { Router } from 'express';
 import catchErrors from 'async-error-catcher'
-import UserController from '../controllers/authController';
+import ContactController from '../controllers/contactController';
+import passport from 'passport';
 
-const userController = new UserController();
+const authenticatedRoutes = passport.authenticate("jwt", {session: false} );
+
+const contactController = new ContactController();
 const router = new Router();
 
-router.post('/signup', catchErrors(userController.userRegistration));
-
-router.post('/login', catchErrors(userController.userLogin));
-
+router.post('/add-contact', authenticatedRoutes, catchErrors(contactController.addContact));
+router.delete('/delete-contact/:contactId', authenticatedRoutes, catchErrors(contactController.deleteContact));
 
 router.use((error, req, res, next) => {
 if (error.type === 'ValidationError') {

@@ -1,12 +1,12 @@
-import Contact from '../models/userModel';
+import User from '../models/userModel';
 import Controller from '../controllers/index';
 import bycrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 import databaseConfiguration from '../../utils/dbConfig';
 
-export default class ContactController extends Controller {
+export default class UserController extends Controller {
   
-  async addContact ({ body }, res) {
+  async userRegistration ({ body }, res) {
     await super.validate(body, {
       username: 'required|string',
       password: 'required|string',
@@ -19,25 +19,22 @@ export default class ContactController extends Controller {
     
     const { username, password, phone }  = body;
 
-    const newUser = await Contact.create({
+    const newUser = await User.create({
         username,
         password,
         phone
     });
     return res.status(201).jsend.success({ user: newUser })
   }
-  async deleteContact ({ body }, res) {
-    // delete Logic here
-  }
 
-  async loginContact({body}, res) {
+  async userLogin({body}, res) {
     await super.validate(body, {
       username: 'required|string',
       password: 'required|string'
     });
 
     const { username, password }  = body;
-    const userDetails = await Contact.findOne({ username });
+    const userDetails = await User.findOne({ username });
 
     if (!userDetails) {
       return res.status(400).jsend.fail({
@@ -59,8 +56,6 @@ export default class ContactController extends Controller {
     {
       expiresIn: 604800
     });
-
-
 
     return res.status(200).jsend.success({
       message: `Welcome ${userDetails.username} your phone number is ${userDetails.phone}`,

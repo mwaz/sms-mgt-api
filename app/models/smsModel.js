@@ -8,7 +8,8 @@ const smsSchema = new mongoose.Schema({
     },
     sender: {
       type: Number,
-      ref: 'User',
+    //   ref: 'User',
+      unique: false
     },
     recipient: {
       type: Number,
@@ -17,7 +18,12 @@ const smsSchema = new mongoose.Schema({
     status: {
         type: String,
         unique: false
-      }
+      },
+    contactReference: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Contact',
+        required: true
+    },
   },
   {
     timestamps: true

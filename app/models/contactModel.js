@@ -1,19 +1,13 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 
-const UserSchema = new mongoose.Schema({
+const ContactSchema = new mongoose.Schema({
     username: {
       type: String,
       min: [4, "Username too short"],
       max: 12,
       required: [true, "Kindly provide a username"],
       unique: true
-    },
-    password: {
-      type: String,
-      min: [6, "Password too short"],
-      max: 50,
-      required: [true, "Kindly provide a valid password"]
     },
     phone: {
         type: Number,
@@ -26,13 +20,14 @@ const UserSchema = new mongoose.Schema({
     timestamps: true
   })
 
-  UserSchema.plugin(uniqueValidator, {
+
+  ContactSchema.plugin(uniqueValidator, {
     message: 'This {PATH} has already been added.'
   })
 
-  const User = mongoose.model('User', UserSchema);
+  const Contact = mongoose.model('Contact', ContactSchema);
 
-  export default User;
+  export default Contact;
 
 
 

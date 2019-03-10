@@ -1,5 +1,5 @@
 import newStrategy from 'passport-jwt';
-import Contact from '../../app/models/userModel';
+import User from '../../app/models/userModel';
 import config from '../../config';
 const JwtSTrategy = newStrategy.Strategy;
 const ExtractJWT = newStrategy.ExtractJwt;
@@ -12,7 +12,7 @@ module.exports = function(passport) {
   // opts.secretOrKey =  config[process.env.NODE_ENV]['SECRET'];
   passport.use(
     new JwtSTrategy(opts, (jwt_payload, done) => {
-      Contact.findById(jwt_payload._id, (err, user) => {
+      User.findById(jwt_payload._id, (err, user) => {
         if (err) {
           return done(err, false);
         }
