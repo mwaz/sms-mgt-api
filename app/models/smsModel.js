@@ -4,7 +4,7 @@ import uniqueValidator from 'mongoose-unique-validator';
 const smsSchema = new mongoose.Schema({
     smsMessage: {
       type: String,
-      required: [false, "Kindly provide a message"],
+      required: [true, "Kindly provide a message"],
     },
     sender: {
       type: Number,
@@ -12,7 +12,7 @@ const smsSchema = new mongoose.Schema({
     },
     recipient: {
       type: Number,
-      required: [false, "Kindly provide a message recipient"],
+      required: [true, "Kindly provide a message recipient"],
     },
     status: {
         type: String,
