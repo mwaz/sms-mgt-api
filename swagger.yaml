@@ -176,6 +176,8 @@ paths:
       description: Sent sms's can be viewed by the contacts once they log in or create accounts in the system
       tags:
         - Sms
+      security:
+        - apiKey: []
       parameters:
         - in: body
           name: smsMessage
@@ -200,6 +202,8 @@ paths:
       description: All messages sent are stored in the users inbox and can be viewed where need be
       tags:
         - Sms
+      security:
+        - apiKey: []
       responses:
         200:
           description: All SMS's retrived successfully
@@ -212,6 +216,8 @@ paths:
       description: Single received messages can be viewed by a user where need be
       tags:
         - Sms
+      security:
+        - apiKey: []
       parameters:
         - in: path
           name: smsId
@@ -231,6 +237,8 @@ paths:
       description: Single received messages can be deleted by a user where need be
       tags:
         - Sms
+      security:
+        - apiKey: []
       parameters:
         - in: path
           name: smsId
@@ -243,9 +251,6 @@ paths:
           description: Invalid message Id supplied
         500:
           $ref: '#/components/errors/internalServerError'
-
-
-
 
 components:
   schemas:
