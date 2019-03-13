@@ -7,7 +7,10 @@ import routes from './app/routes';
 import  bodyParser from 'body-parser';
 import express from 'express';
 import jsend from 'jsend'
+import swaggerUi  from 'swagger-ui-express';
+import YAML from 'yamljs';
 
+const swaggerDocument = YAML.load("./swagger.yaml");
 
 mongoose
   .connect(
@@ -25,7 +28,7 @@ mongoose
 
 const app = express();
 
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(cors());
 app.use(bodyParser.json());
