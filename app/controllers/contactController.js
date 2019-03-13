@@ -25,13 +25,26 @@ export default class ContactController extends Controller {
         const contact = await Contact.findOne({
             phone: params.contactId
         });
+        console.log(contact, '[][][][][[]][][][][][][][][][][][][][][][][][][] your output');
 
         if(!contact){
             return res.status(400).jsend.fail({ 
                 message: `Oops! contact ${params.contactId} does not exist`,
              })
         }
-        return res.status(201).jsend.success({ contact })
+        return res.status(200).jsend.success({ contact })
+    }
+
+    async getAllContacts (req, res) {
+
+        const contact = await Contact.find({});
+
+        if(!contact){
+            return res.status(400).jsend.fail({ 
+                message: `Oops! contacts do not exist`,
+             })
+        }
+        return res.status(200).jsend.success({ contact })
     }
 
     async deleteContact (req, res) {

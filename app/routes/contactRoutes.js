@@ -8,9 +8,10 @@ const authenticatedRoutes = passport.authenticate("jwt", {session: false} );
 const contactController = new ContactController();
 const router = new Router();
 
-router.post('/add-contact', authenticatedRoutes, catchErrors(contactController.addContact));
-router.delete('/delete-contact/:contactId', authenticatedRoutes, catchErrors(contactController.deleteContact));
-router.get('/get-contact/:contactId', authenticatedRoutes, catchErrors(contactController.getContact));
+router.post('/', authenticatedRoutes, catchErrors(contactController.addContact));
+router.delete('/:contactId', authenticatedRoutes, catchErrors(contactController.deleteContact));
+router.get('/:contactId', authenticatedRoutes, catchErrors(contactController.getContact));
+router.get('/', authenticatedRoutes, catchErrors(contactController.getAllContacts));
 
 router.use((error, req, res, next) => {
 if (error.type === 'ValidationError') {

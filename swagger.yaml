@@ -45,10 +45,13 @@ paths:
         - in: body
           name: username
           description: Unique username of the person registering to the system
+          required: true
           name: phone
           description: Unique phone number of the person registering to the system
+          required: true
           name: password
           description: password for authentication of the person registering to the system
+          required: true
           schema:
             $ref: '#/components/schemas/UserRegister'
       responses:
@@ -71,8 +74,10 @@ paths:
         - in: body
           name: username
           description: Unique username of the person loggin in to the system
+          required: true
           name: password
           description: password for authentication of the person loggin in to the system
+          required: true
           schema:
             $ref: '#/components/schemas/UserLogin'
       responses:
@@ -82,6 +87,165 @@ paths:
           description: Kindly fill in all required fields
         500:
           $ref: '#/components/errors/internalServerError'
+    
+  /contacts:
+    post:
+      summary: Create contacts in the system
+      description: One can send messages to their contacts or delete them
+      tags:
+        - Contacts
+      security:
+        - apiKey: []
+      parameters:
+        - in: body
+          name: username
+          description: Unique username of the contact
+          required: true
+          name: phone
+          description: Unique phone number of the contact
+          required: true
+          schema:
+            $ref: '#/components/schemas/ContactRegister'
+      responses:
+        201: 
+          description: successfully created contact
+        422:
+          description: Kindly fill in all required fields
+        500:
+          $ref: '#/components/errors/internalServerError'
+
+  /contacts/:
+    get:
+      summary: Get all contact saved in the system
+      description: One can get all their contacts they have saved in the system
+      tags:
+        - Contacts
+      security:
+        - apiKey: []
+      responses:
+        200: 
+          description: successfully got contacts
+        500:
+          $ref: '#/components/errors/internalServerError'
+
+  /contacts/{contactId}:
+    get:
+      summary: Get single contact in the system
+      description: One can get a single contact they have saved in the system
+      tags:
+        - Contacts
+      security:
+        - apiKey: []
+      parameters:
+        - in: path
+          name: contactId
+          description: phone number to get details of a single contact
+          required: true
+      responses:
+        200: 
+          description: successfully got contact
+        400:
+          description: Kindly provide a valid contactId
+        500:
+          $ref: '#/components/errors/internalServerError'
+  
+  /contacts/{contactId}/:
+    delete:
+      summary: delete single contact in the system
+      description: One can delete the contacts they have saved in the system and their references to messages sent ans received
+      tags:
+        - Contacts
+      security:
+        - apiKey: []
+      parameters:
+        - in: path
+          name: contactId
+          description: phone number to delete details of a single contact
+          required: true
+      responses:
+        200: 
+          description: successfully got contact
+        400:
+          description: Kindly provide a valid contactId
+        500:
+          $ref: '#/components/errors/internalServerError'
+
+  /sms:
+    post:
+      summary: Send an sms to an existing contact
+      description: Sent sms's can be viewed by the contacts once they log in or create accounts in the system
+      tags:
+        - Sms
+      parameters:
+        - in: body
+          name: smsMessage
+          description: Message to be sent to the recipient
+          required: true
+          name: recipient
+          description: Receiver of the sms message who must be an existing contact 
+          required: true
+          schema:
+            $ref: '#/components/schemas/CreateSms'
+      responses:
+        201:
+          description: SMS messgae has been sent
+        422:
+          description: Kindly fill in all required fields
+        500:
+          $ref: '#/components/errors/internalServerError'
+
+  /sms/:
+    get:
+      summary: Get all messages in your inbox
+      description: All messages sent are stored in the users inbox and can be viewed where need be
+      tags:
+        - Sms
+      responses:
+        200:
+          description: All SMS's retrived successfully
+        500:
+          $ref: '#/components/errors/internalServerError'
+    
+  /sms/{smsId}:
+    get:
+      summary: Get single sent messages in your inbox
+      description: Single received messages can be viewed by a user where need be
+      tags:
+        - Sms
+      parameters:
+        - in: path
+          name: smsId
+          description: Message Id of individual messages
+          required: true
+      responses:
+        200:
+          description: Sms retrived successfully
+        400:
+          description: Invalid message Id supplied
+        500:
+          $ref: '#/components/errors/internalServerError'
+
+  /sms/{smsId}/:
+    delete:
+      summary: Delete single sent messages in your inbox
+      description: Single received messages can be deleted by a user where need be
+      tags:
+        - Sms
+      parameters:
+        - in: path
+          name: smsId
+          description: Message Id of individual messages
+          required: true
+      responses:
+        200:
+          description: Sms deleted successfully
+        400:
+          description: Invalid message Id supplied
+        500:
+          $ref: '#/components/errors/internalServerError'
+
+
+
 
 components:
   schemas:
@@ -102,6 +266,22 @@ components:
           type: string
         password:
           type: string
+    
+    ContactRegister:
+      type: object
+      properties:
+        username:
+          type: string
+        phone:
+          type: number
+
+    CreateSms:
+      type: object
+      properties:
+        smsMessage:
+          type: string
+        recipient:
+          type: number
     
   errors:
     internalServerError:
