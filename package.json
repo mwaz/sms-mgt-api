@@ -4,7 +4,7 @@
   "description": "an SMS management API that mocks a user sending, receiving or deleting an SMS",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
+    "test": "jest",
     "lint": "eslint app/",
     "dev": "nodemon --exec babel-node ./index.js localhost 3001"
   },
@@ -33,6 +33,7 @@
     "faker": "^4.1.0",
     "indicative": "^5.0.8",
     "istanbul": "^0.4.5",
+    "jest": "^24.5.0",
     "jsend": "^1.0.2",
     "jsonwebtoken": "^8.5.0",
     "lodash": "^4.17.11",

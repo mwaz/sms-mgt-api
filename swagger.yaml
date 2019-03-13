@@ -1,0 +1,108 @@
+swagger: "2.0"
+info:
+    title: sms management API
+    description: An awesome app for simulating sms sending, receving from various contacts
+    version: 1.0.0
+
+servers:
+  - url: {protocol}://127.0.0.1:{port}
+    description: Development server (uses test data)
+    variables:
+      port:
+        enum:
+          - '3002'
+          - '3003'
+        default: '3001'
+      protocol:
+        enum:
+          - 'http'
+          - 'https'
+        default: 'http'
+
+securityDefinitions:
+      apiKey:
+        type: apiKey
+        in: header
+        name: Authorization
+
+basePath: /sms-mgt/api
+schemes: 
+    - http
+
+security:
+    - apiKey: []
+consumes:
+    - application/json
+
+paths:
+  /users/signup:
+    post:
+      summary: Register a new user to the system
+      description: New users must have username, passwords and phone numbers as a requirement
+      tags:
+        - Users
+      parameters:
+        - in: body
+          name: username
+          description: Unique username of the person registering to the system
+          name: phone
+          description: Unique phone number of the person registering to the system
+          name: password
+          description: password for authentication of the person registering to the system
+          schema:
+            $ref: '#/components/schemas/UserRegister'
+      responses:
+        201:
+          description: User has been registered
+        409:
+          description: User/Phone already exists
+        422:
+          description: Kindly fill in all required fields
+        500:
+          $ref: '#/components/errors/internalServerError'
+
+  /users/login:
+    post:
+      summary: login a registered user to the system
+      description: Logged in users obtain privilleges to send and receive messages and to also create and delete contacts
+      tags:
+        - Users
+      parameters:
+        - in: body
+          name: username
+          description: Unique username of the person loggin in to the system
+          name: password
+          description: password for authentication of the person loggin in to the system
+          schema:
+            $ref: '#/components/schemas/UserLogin'
+      responses:
+        200:
+          description: User has been Logged in
+        422:
+          description: Kindly fill in all required fields
+        500:
+          $ref: '#/components/errors/internalServerError'
+
+components:
+  schemas:
+    UserRegister:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        phone:
+          type: number
+
+    UserLogin:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    
+  errors:
+    internalServerError:
+      description: Something went wrong on the server
