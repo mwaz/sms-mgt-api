@@ -12,6 +12,8 @@ import YAML from 'yamljs';
 
 const swaggerDocument = YAML.load("./swagger.yaml");
 
+const dbUri = 
+
 mongoose
   .connect(
     dBConfig.database,
@@ -20,9 +22,10 @@ mongoose
   .then(() => {
     console.log('successfully connected to the database');
   })
-  .catch(() => {
+  .catch((e) => {
     console.log('unable to connect to the database  Exiting now..');
-    process.exit();
+    console.log(e, ' the error [][][][][[]][][][][][][][][][][][][][][][][][][] your output');
+    // process.exit();
   });
   mongoose.set('useCreateIndex', true);
 
