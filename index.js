@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
   res.send('Invalid Endpoint');
 });
 
-const port = dBConfig.port || 3005;
+const port = dBConfig.port || 3005 || process.env.PORT;
 
 const server = app.listen(port, function() {
   console.log('app running on', server.address().port);
