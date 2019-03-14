@@ -28,6 +28,7 @@ securityDefinitions:
 basePath: /sms-mgt/api
 schemes: 
     - http
+    - https
 
 security:
     - apiKey: []
