@@ -42,5 +42,4 @@ The app is currently documented using swagger 2.0 and the Open API Specification
 ## contributors
 [@mwaz](https://github.com/mwaz)
 
-## Props
-Valuable assitance from [@stackoverflow](https://stackoverflow.com) :)
+
