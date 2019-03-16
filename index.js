@@ -24,8 +24,7 @@ mongoose
   })
   .catch((e) => {
     console.log('unable to connect to the database  Exiting now..');
-    console.log(e, ' the error [][][][][[]][][][][][][][][][][][][][][][][][][] your output');
-    // process.exit();
+    process.exit();
   });
   mongoose.set('useCreateIndex', true);
 

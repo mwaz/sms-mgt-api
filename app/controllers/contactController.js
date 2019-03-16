@@ -25,7 +25,6 @@ export default class ContactController extends Controller {
         const contact = await Contact.findOne({
             phone: params.contactId
         });
-        console.log(contact, '[][][][][[]][][][][][][][][][][][][][][][][][][] your output');
 
         if(!contact){
             return res.status(400).jsend.fail({ 
