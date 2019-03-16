@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/mwaz/sms-mgt-api/badge.svg?branch=master)](https://coveralls.io/github/mwaz/sms-mgt-api?branch=master)
+
 ## SMS Management API
 
 A CRUD API app built on node, express, mongodb and Passport.
