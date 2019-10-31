@@ -41,7 +41,7 @@
     "minimist": "^1.2.0",
     "mocha": "^5.2.0",
     "mocha-prepare": "^0.1.0",
-    "mongoose": "^5.2.9",
+    "mongoose": "^5.7.5",
     "mongoose-unique-validator": "^2.0.2",
     "nodemon": "^1.17.3",
     "nyc": "^13.3.0",
