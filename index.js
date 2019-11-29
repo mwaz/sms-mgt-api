@@ -12,7 +12,7 @@ import YAML from 'yamljs';
 
 const swaggerDocument = YAML.load("./swagger.yaml");
 
-const dbUri = 
+// const dbUri = 
 
 mongoose
   .connect(
