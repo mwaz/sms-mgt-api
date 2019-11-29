@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+knd: Deployment
+metadata:
+  name: sms-mgt-api
+spec:
+  replicas: 2
+  selctor:
+    matchLabels:
+      name: sms-mgt-api
+  template:
+    metadata:
+      labels:
+        name: sms-mgt-api
+    spec:
+      containers:
+      - image: sparatan/sms-mgt-api:latest
+        imagePullPolicy: IfNotPresent
+        name: sms-mgt-api
+        livenessProbe:
+          httpGet:
+            path: /api-docs
+            port: 3001
+            scheme: HTTP
+          initialDelaySeconds: 40
+          periodSeconds: 3
+        ports:
+        - containerPort: 3000
+  

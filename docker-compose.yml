@@ -1,0 +1,20 @@
+version: "2"
+services:
+  app:
+    container_name: app
+    restart: always
+    # build: .
+    image: sparatan/sms-mgt-api:latest 
+    ports:
+      - "3001:3001"
+    env_file: 
+      .env-local
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
