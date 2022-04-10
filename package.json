@@ -37,7 +37,7 @@
     "jest": "^24.5.0",
     "jsend": "^1.0.2",
     "jsonwebtoken": "^8.5.0",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.6",
     "mocha": "^5.2.0",
     "mocha-prepare": "^0.1.0",
     "mongodb": "^3.1.13",
